@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Data.Entity.Infrastructure;
+using Personal_Web.Models;
 namespace Personal_Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private SchoolContext db = new SchoolContext();
+
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var departments = from c in db.Departments select c;
+
+            return View(await departments.ToListAsync());
+
+
         }
 
         public ActionResult About()
